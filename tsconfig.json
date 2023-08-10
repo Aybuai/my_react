@@ -2,11 +2,7 @@
   "compilerOptions": {
     "noImplicitAny": false, // 默认any类型不用写
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,9 +15,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules" // css模块化 类型推导插件
+      }
+    ]
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
