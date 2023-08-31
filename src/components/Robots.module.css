@@ -13,4 +13,5 @@
 
 .cardContainer:hover {
 	transform: scale(1.05);
+	box-shadow: black 0 0 5px;
 }
