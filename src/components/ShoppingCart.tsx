@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./ShoppingCart.module.css";
+import { FiShoppingCart } from "react-icons/fi";
 
 interface Props {}
 
@@ -14,17 +15,23 @@ class ShoppingCart extends React.Component<Props, State> {
       isOpen: false,
     };
   }
+  // 获取不到this，所以用箭头函数继承上层this，即ShoppingCart类
+  handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    // target： 被点击dom
+    // currentTarget： 事件绑定的dom
+    console.log("e.target", e.target);
+    console.log("e.currentTarget", e.currentTarget);
+    if ((e.target as HTMLElement).nodeName === "SPAN") {
+      this.setState({ isOpen: !this.state.isOpen });
+    }
+  };
 
   render() {
     return (
       <div className={styles.cartContainer}>
-        <button
-          className={styles.button}
-          onClick={() => {
-            this.setState({ isOpen: !this.state.isOpen });
-          }}
-        >
-          购物车 2 （件）
+        <button className={styles.button} onClick={this.handleClick}>
+          <FiShoppingCart />
+          <span>购物车 2 （件）</span>
         </button>
         <div
           className={styles.cartDropDown}
