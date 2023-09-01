@@ -9,12 +9,14 @@ interface Props {}
 
 interface State {
   robotGallery: any[];
+  count: number;
 }
 class App extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
       robotGallery: [],
+      count: 0,
     };
   }
 
@@ -24,6 +26,10 @@ class App extends React.Component<Props, State> {
       .then((data) => this.setState({ robotGallery: data }));
   }
 
+  // setState 是同步还是异步？
+  // setState => 异步更新，同步执行
+  // 接收两个参数，第一个参数类型： Object | Function   第二个参数： Function
+  // 第一个参数当为Function时，接收两个参数，分别是上一个的state和props
   render() {
     return (
       <div className={styles.app}>
@@ -31,6 +37,29 @@ class App extends React.Component<Props, State> {
           <img src={logo} className={styles.appLogo} alt="logo" />
           <h1>罗伯特机器人吊炸天平台</h1>
         </div>
+        <button
+          onClick={() => {
+            this.setState(
+              (preState, preProps) => {
+                return { count: preState.count + 1 };
+              },
+              () => {
+                console.log(this.state.count, '1');
+              }
+            );
+            this.setState(
+              (preState, preProps) => {
+                return { count: preState.count + 1 };
+              },
+              () => {
+                console.log(this.state.count, '2');
+              }
+            );
+          }}
+        >
+          click
+        </button>
+        <span>{this.state.count}</span>
         <ShoppingCart />
         <div className={styles.robotList}>
           {this.state.robotGallery.map((r) => (
