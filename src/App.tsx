@@ -20,11 +20,23 @@ class App extends React.Component<Props, State> {
     };
   }
 
+  // 生命周期第一阶段：在组件创建好dom元素以后，挂载进页面的时候调用，执行一次
   componentDidMount(): void {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((data) => this.setState({ robotGallery: data }));
   }
+
+  // 生命周期第二阶段：更新
+  // shouldComponentUpdate(nextProps: Readonly<Props>, nextState: Readonly<State>, nextContext: any): boolean {
+  // 可以去判断属性是否发生变化，然后去更新属性
+  // }
+  // componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): void {
+  // }
+
+  // 声明周期第三阶段：销毁
+  // componentWillUnmount(): void {
+  // }
 
   // setState 是同步还是异步？
   // setState => 异步更新，同步执行
@@ -44,7 +56,7 @@ class App extends React.Component<Props, State> {
                 return { count: preState.count + 1 };
               },
               () => {
-                console.log(this.state.count, '1');
+                console.log(this.state.count, "1");
               }
             );
             this.setState(
@@ -52,7 +64,7 @@ class App extends React.Component<Props, State> {
                 return { count: preState.count + 1 };
               },
               () => {
-                console.log(this.state.count, '2');
+                console.log(this.state.count, "2");
               }
             );
           }}
