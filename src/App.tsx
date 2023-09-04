@@ -24,8 +24,11 @@ import ShoppingCart from "./components/ShoppingCart";
 // 第一个参数当为Function时，接收两个参数，分别是上一个的state和props
 const App: React.FC = () => {
   const [count, setCount] = useState<number>(0);
-
   const [robotGallery, setRobotGallery] = useState<any>([]);
+  // loading
+  const [loading, setLoading] = useState<boolean>(false);
+  // 处理接口异常信息
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     document.title = `点击${count}次`;
@@ -33,9 +36,22 @@ const App: React.FC = () => {
 
   // 第二个参数如果不写相当于类组件的 componentDidUpdate 生命周期函数；第二个参数为空数组的话则相当于 componentDidMount 生命周期函数
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((data) => setRobotGallery(data));
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const responses = await fetch(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        const data = await responses.json();
+        setRobotGallery(data);
+      } catch (e) {
+        if (e instanceof Error) {
+          setError(e.message);
+        }
+      }
+      setLoading(false);
+    };
+    fetchData();
   }, []);
 
   return (
@@ -53,11 +69,16 @@ const App: React.FC = () => {
       </button>
       <span>{count}</span>
       <ShoppingCart />
-      <div className={styles.robotList}>
-        {robotGallery.map((r) => (
-          <Robots id={r.id} name={r.name} email={r.email} />
-        ))}
-      </div>
+      {!error || (error !== "" && <div>报错：{error}</div>)}
+      {!loading ? (
+        <div className={styles.robotList}>
+          {robotGallery.map((r) => (
+            <Robots id={r.id} name={r.name} email={r.email} />
+          ))}
+        </div>
+      ) : (
+        <h2>loading 加载中</h2>
+      )}
     </div>
   );
 };
