@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Robots.module.css";
+import { appContext } from "../index";
 
 interface RobotProps {
   id: number;
@@ -8,6 +9,7 @@ interface RobotProps {
 }
 
 const Robot: React.FC<RobotProps> = ({ id, name, email }) => {
+  const value = useContext(appContext);
   return (
     <div className={styles.cardContainer}>
       <img
@@ -15,7 +17,8 @@ const Robot: React.FC<RobotProps> = ({ id, name, email }) => {
         alt="robot"
       />
       <h2>{name}</h2>
-      <span>{email}</span>
+      <p>{email}</p>
+      <p>作者：{value.username}</p>
     </div>
   );
 };

@@ -7,6 +7,13 @@ import reportWebVitals from "./reportWebVitals";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+const defaultContextValue = {
+  username: "Aybuai",
+};
+
+export const appContext = React.createContext(defaultContextValue);
+
 root.render(
   // componentDidMount 会执行两次，由于React18添加新特性导致，注释掉React.StrictMode
   // <React.StrictMode>
