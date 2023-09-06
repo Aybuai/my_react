@@ -3,21 +3,18 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { AppStateProvider } from "./AppState";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const defaultContextValue = {
-  username: "Aybuai",
-};
-
-export const appContext = React.createContext(defaultContextValue);
-
 root.render(
   // componentDidMount 会执行两次，由于React18添加新特性导致，注释掉React.StrictMode
   // <React.StrictMode>
-  <App />
+  <AppStateProvider>
+    <App />
+  </AppStateProvider>
   // </React.StrictMode>
 );
 
